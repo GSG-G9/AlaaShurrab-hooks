@@ -4,11 +4,10 @@ const Task3 = () => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (e) => {
-    console.log(e.target.parentNode.children[1].value);
     setTodos([
       ...todos,
       {
-        id: todos.length,
+        id: todos.length === 0 ? 0 : todos[todos.length - 1].id + 1,
         description: e.target.parentNode.children[1].value,
       },
     ]);
@@ -18,15 +17,22 @@ const Task3 = () => {
     console.log("hi");
     return todos.map((todo, i) => {
       return (
-        <li key={i}>
+        <li key={i} id={todo.id}>
           <p>{todo.description}</p>
-          
+          <p onClick={removeTodo}>X</p>
         </li>
       );
     });
   };
 
-
+  const removeTodo = (e) => {
+    console.log(e.target.parentNode.id);
+    // const newArr = todos.filter((todo) => todo.id !== e.target.parentNode.id);
+    setTodos(
+      todos.filter((todo) => todo.id !== parseInt(e.target.parentNode.id))
+    );
+  };
+  console.log(todos);
   return (
     <div>
       <h1>ToDo</h1>
